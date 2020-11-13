@@ -46,13 +46,27 @@ namespace ChatbotServer
             int receivedBytes = 0;
             int sendedBytes = 0;
             string receivedString, sendString;
-
+            string bot = "Server :  Benvenuto client";
             while (true)
             {
                 receivedBytes = client.Receive(buff);
                 Console.WriteLine("Numero di byte ricevuti: " + receivedBytes);
                 receivedString = Encoding.ASCII.GetString(buff, 0, receivedBytes);
                 Console.WriteLine("Stringa ricevuta: " + receivedString);
+
+                if (receivedString.ToUpper() == "CIAO")
+                {
+                    bot = "Server : Ciao";
+                }
+
+                if (receivedString.ToUpper() == "COME STAI?")
+                {
+                    bot = "Server : Bene";
+                }
+                if (receivedString.ToUpper() == "CHE FAI?")
+                {
+                    bot = "Server : Niente";
+                }
 
                 if (receivedString.ToUpper() == "QUIT")
                 {
@@ -63,19 +77,19 @@ namespace ChatbotServer
                 sendedBytes = 0;
 
                 // crea il messaggio
-                sendString = "Benvenuto client";
+                sendString = bot;
 
                 // lo converto in byte
                 buff = Encoding.ASCII.GetBytes(sendString);
 
                 //invio al client il messaggio
                 sendedBytes = client.Send(buff);
-
+                bot = "";
                 Array.Clear(buff, 0, buff.Length);
-                Console.ReadLine();
+                
 
             }
-            Console.ReadLine();
+            
             // Termina il programma
 
 
