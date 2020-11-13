@@ -47,6 +47,7 @@ namespace ChatbotServer
             int sendedBytes = 0;
             string receivedString, sendString;
             string bot = "Server :  Benvenuto client";
+            bool flags = false;
             while (true)
             {
                 receivedBytes = client.Receive(buff);
@@ -54,25 +55,41 @@ namespace ChatbotServer
                 receivedString = Encoding.ASCII.GetString(buff, 0, receivedBytes);
                 Console.WriteLine("Stringa ricevuta: " + receivedString);
 
+                if(receivedString != "\r\n")
+                {
+
+                
                 if (receivedString.ToUpper() == "CIAO")
                 {
-                    bot = "Server : Ciao";
+                    bot = "Server : Ciao \n Client:";
+
+                    flags = true;
                 }
 
                 if (receivedString.ToUpper() == "COME STAI?")
                 {
-                    bot = "Server : Bene";
+                    bot = "Server : Bene \n Client:";
+                    flags = true;
                 }
                 if (receivedString.ToUpper() == "CHE FAI?")
                 {
-                    bot = "Server : Niente";
+                    bot = "Server : Niente \n Client:";
+                    flags = true;
+                }
+
+                if (receivedString.ToUpper() != "CHE FAI?" && receivedString.ToUpper() != "CIAO" && receivedString.ToUpper() != "COME STAI?" && flags == false)
+                {
+                    bot = "Server : Non ho capito \n Client:";
+                    
                 }
 
                 if (receivedString.ToUpper() == "QUIT")
                 {
+                    bot = "Arrivderci";
                     break;
                 }
 
+                flags = false;
                 Array.Clear(buff, 0, buff.Length);
                 sendedBytes = 0;
 
@@ -84,9 +101,9 @@ namespace ChatbotServer
 
                 //invio al client il messaggio
                 sendedBytes = client.Send(buff);
-                bot = "";
-                Array.Clear(buff, 0, buff.Length);
                 
+                Array.Clear(buff, 0, buff.Length);
+                }
 
             }
             
