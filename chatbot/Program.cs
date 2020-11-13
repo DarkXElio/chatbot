@@ -50,7 +50,7 @@ namespace ChatbotServer
             while (true)
             {
                 receivedBytes = client.Receive(buff);
-                Console.WriteLine("Numero di byte ricevuti: " + receivedBytes);
+                Console.WriteLine("Numero di byte ricevsuti: " + receivedBytes);
                 receivedString = Encoding.ASCII.GetString(buff, 0, receivedBytes);
                 Console.WriteLine("Stringa ricevuta: " + receivedString);
 
