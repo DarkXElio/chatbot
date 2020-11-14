@@ -46,11 +46,27 @@ namespace ChatbotServer
             int receivedBytes = 0;
             int sendedBytes = 0;
             string receivedString, sendString;
-            string bot = "Server :  Benvenuto client";
+            string bot = "ChatBot :  Benvenuto client\n\r\n\rChatBot : Se ti server aiuta basta inviare \n\r#CMD  ( Per vederi tutti i commandi )\n\r\n \rClient:";
             bool flags = false;
+
+
+
+
+
+            //invio al client il messaggio del benvenuto
+            buff = Encoding.ASCII.GetBytes(bot);
+            sendedBytes = client.Send(buff);
+
+
+
+            //Multi messaggio
+            Random rnd = new Random();
             while (true)
             {
+                try
+                {
                 receivedBytes = client.Receive(buff);
+                
                 Console.WriteLine("Numero di byte ricevuti: " + receivedBytes);
                 receivedString = Encoding.ASCII.GetString(buff, 0, receivedBytes);
                 Console.WriteLine("Stringa ricevuta: " + receivedString);
@@ -61,31 +77,41 @@ namespace ChatbotServer
                 
                 if (receivedString.ToUpper() == "CIAO")
                 {
-                    bot = "Server : Ciao \n Client:";
+                        String[] Msg_risp_ciao = { "Ciao", "Buongiorno", "Salve", "Ciao come posso aiutarti?" };
+
+                        bot = "ChatBot : "+ Msg_risp_ciao[rnd. Next(5)]+" \n \rClient:";
 
                     flags = true;
                 }
 
                 if (receivedString.ToUpper() == "COME STAI?")
                 {
-                    bot = "Server : Bene \n Client:";
+                    String[] Msg_ris_come_stai= { "Bene", "Male", "Cosi cosi", "Eh il nuovo DPCM ci ha chiuso in casa" };
+                    bot = "ChatBot : " + Msg_ris_come_stai[rnd.Next(5)] + " \n \rClient:";
                     flags = true;
                 }
                 if (receivedString.ToUpper() == "CHE FAI?")
                 {
-                    bot = "Server : Niente \n Client:";
+                    String[] Msg_risp_che_fai = { "Niente", "Ti sto rsipondento", "Lavoro", "Guardando video su TikTok" };
+                    bot = "ChatBot: " + Msg_risp_che_fai[rnd.Next(5)] + " \n Client:";
+                    flags = true;
+                }
+                if (receivedString.ToUpper() == "CMD")
+                {
+                    bot = "ChatBot: Posso rispondere solo alle seguenti domande \n\r#Ciao \n\r#Come stai?\n\r#Che fai?\n\rChatBot: Se vuoi uscire dal Bot basta inviare \n\r#Quit\n\r#Exit \n \rClient:";
                     flags = true;
                 }
 
-                if (receivedString.ToUpper() != "CHE FAI?" && receivedString.ToUpper() != "CIAO" && receivedString.ToUpper() != "COME STAI?" && flags == false)
+                        if (receivedString.ToUpper() != "CHE FAI?" && receivedString.ToUpper() != "CIAO" && receivedString.ToUpper() != "COME STAI?" && flags == false)
                 {
-                    bot = "Server : Non ho capito \n Client:";
+                            String[] Msg_risp_nonhocapito = { "Non credo di aver trovato la risposta alla tua domanda", "Non ho capito", "Posso rispondere solo alle seguenti domande \n\r-Ciao \n\r-Come stai?\n\r-Che fai?", "Mi dispiace ma non ho capito" };
+                            bot = "ChatBot : " + Msg_risp_nonhocapito[rnd.Next(5)] + " \n \rClient:";
                     
                 }
 
-                if (receivedString.ToUpper() == "QUIT")
-                {
-                    bot = "Arrivderci";
+                if (receivedString.ToUpper() == "QUIT" || receivedString.ToUpper() == "EXIT")
+                        {
+                    bot = "ChatBot : Arrivderci :)";
                     break;
                 }
 
@@ -103,6 +129,14 @@ namespace ChatbotServer
                 sendedBytes = client.Send(buff);
                 
                 Array.Clear(buff, 0, buff.Length);
+                }
+                }
+                catch
+                {
+                    Console.WriteLine("Qualcosa è andato storto Errore di disconessione");
+                    Console.WriteLine("Premi Enter per uscire");
+                    Console.ReadLine();
+                    break;
                 }
 
             }
