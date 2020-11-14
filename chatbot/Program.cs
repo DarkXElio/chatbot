@@ -46,7 +46,11 @@ namespace ChatbotServer
             int receivedBytes = 0;
             int sendedBytes = 0;
             string receivedString, sendString;
-            string bot = "ChatBot :  Benvenuto client\n\r\n\rChatBot : Se ti server aiuta basta inviare \n\r#CMD  ( Per vederi tutti i commandi )\n\r\n \rClient:";
+            string bot = "ChatBot :  Benvenuto client\n\r\n\r" +
+                         "ChatBot : Se ti server aiuta basta inviare \n\r" +
+                         "#CMD  ( Per vederi tutti i commandi )\n\r\n \r" +
+                         "Client:";
+
             bool flags = false;
 
 
@@ -79,7 +83,8 @@ namespace ChatbotServer
                 {
                         String[] Msg_risp_ciao = { "Ciao", "Buongiorno", "Salve", "Ciao come posso aiutarti?" };
 
-                        bot = "ChatBot : "+ Msg_risp_ciao[rnd. Next(5)]+" \n \rClient:";
+                          bot = "ChatBot : "+ Msg_risp_ciao[rnd. Next(5)]+" \n \r" +
+                                "Client:";
 
                     flags = true;
                 }
@@ -87,25 +92,38 @@ namespace ChatbotServer
                 if (receivedString.ToUpper() == "COME STAI?")
                 {
                     String[] Msg_ris_come_stai= { "Bene", "Male", "Cosi cosi", "Eh il nuovo DPCM ci ha chiuso in casa" };
-                    bot = "ChatBot : " + Msg_ris_come_stai[rnd.Next(5)] + " \n \rClient:";
+                   
+                          bot = "ChatBot : " + Msg_ris_come_stai[rnd.Next(5)] + " \n \r" +
+                                "Client:";
+
                     flags = true;
                 }
                 if (receivedString.ToUpper() == "CHE FAI?")
                 {
                     String[] Msg_risp_che_fai = { "Niente", "Ti sto rsipondento", "Lavoro", "Guardando video su TikTok" };
-                    bot = "ChatBot: " + Msg_risp_che_fai[rnd.Next(5)] + " \n Client:";
+                          bot = "ChatBot: " + Msg_risp_che_fai[rnd.Next(5)] + " \n \r" +
+                                "Client:";
                     flags = true;
                 }
                 if (receivedString.ToUpper() == "CMD")
                 {
-                    bot = "ChatBot: Posso rispondere solo alle seguenti domande \n\r#Ciao \n\r#Come stai?\n\r#Che fai?\n\rChatBot: Se vuoi uscire dal Bot basta inviare \n\r#Quit\n\r#Exit \n \rClient:";
+                          bot = "ChatBot: Posso rispondere solo alle seguenti domande \n\r" +
+                                "#Ciao \n\r" +
+                                "#Come stai?\n\r" +
+                                "#Che fai?\n\r" +
+                                "ChatBot: Se vuoi uscire dal Bot basta inviare \n\r" +
+                                "#Quit\n\r" +
+                                "#Exit \n \r" +
+                                "Client:";
                     flags = true;
                 }
 
-                        if (receivedString.ToUpper() != "CHE FAI?" && receivedString.ToUpper() != "CIAO" && receivedString.ToUpper() != "COME STAI?" && flags == false)
+                if (receivedString.ToUpper() != "CHE FAI?" && receivedString.ToUpper() != "CIAO" && receivedString.ToUpper() != "COME STAI?" && flags == false)
                 {
                             String[] Msg_risp_nonhocapito = { "Non credo di aver trovato la risposta alla tua domanda", "Non ho capito", "Posso rispondere solo alle seguenti domande \n\r-Ciao \n\r-Come stai?\n\r-Che fai?", "Mi dispiace ma non ho capito" };
-                            bot = "ChatBot : " + Msg_risp_nonhocapito[rnd.Next(5)] + " \n \rClient:";
+                          
+                          bot = "ChatBot : " + Msg_risp_nonhocapito[rnd.Next(5)] + " \n \r" +
+                                "Client:";
                     
                 }
 
